@@ -2,6 +2,10 @@
   color: white;
 }
 
+.PageContent{
+  font-size: 2em;
+}
+
 .AboutPageMain {
   text-align: center;
 }
