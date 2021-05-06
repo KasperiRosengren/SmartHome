@@ -1,38 +1,40 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.PageMain{
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.AboutPageMain {
+  text-align: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.MqttPageMain {
+  text-align: center;
+}
+
+.HomePageMain{
+  text-align: center;
+}
+
+.NavBar{
+  background-color: #18191C;
+  text-align: right;
+}
+
+.TopNavList{
+  margin: 0em;
+  padding-left: 0em;
+  list-style-type: none;
+}
+
+.TopNavItem{
+  display: inline;
+  text-decoration: none;
+  font-size: 2em;
+}
+
+a:-webkit-any-link {
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  text-decoration-style: none;
+  text-decoration-color: none;
 }

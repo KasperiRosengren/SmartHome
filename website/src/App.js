@@ -1,33 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Home from './components/Home';
+import About from './components/About';
+import Data from './components/Data';
+import Mqtt from './components/Mqtt';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+
 
 function App() {
-  const [currentTime, setCurrentTime] = useState(0);
-
-  useEffect(() => {
-    fetch('/time').then(res => res.json()).then(data => {
-      setCurrentTime(data.time);
-    });
-  }, []);
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <p>The current time is {currentTime}.</p>
-      </header>
+    <div className="PageMain">
+      <BrowserRouter>
+        <div className="NavBar">
+          <ul className="TopNavList">
+            <li className="TopNavItem">
+              <Link to="/"> Home </Link>{' '}
+            </li>
+            <li className="TopNavItem">
+              <Link to="/about"> About </Link>{' '}
+            </li>
+            <li className="TopNavItem">
+              <Link to="/data"> Data </Link>{' '}
+            </li>
+            <li className="TopNavItem">
+              <Link to="/mqtt"> Mqtt </Link>{' '}
+            </li>
+          </ul>
+        </div>
+        <div>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/about" component={About} />
+            <Route path="/data" component={Data} />
+            <Route path="/mqtt" component={Mqtt} />
+          </Switch>
+        </div>
+      </BrowserRouter> 
     </div>
   );
 }
