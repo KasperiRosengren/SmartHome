@@ -34,14 +34,19 @@ function Mysql(){
     }
 
     return (
-        <div className="MqttPageMain">
+        <div className="MysqlPageMain">
             <p>Insert into table</p>
             <input placeholder="Table" name="table" value={mysql.table} onChange={insertChanged} />
             <input placeholder="JokuNimi" name="jokuNimi" value={mysql.jokuNimi} onChange={insertChanged} />
             <button onClick={sendMysql}>Send</button>
             <button onClick={getMysql}>Get</button>
-
-            <table>
+            <table className="MysqlTable">
+                <thead>
+                    <tr>
+                        <th id="users_ID">ID</th>
+                        <th id="users_jokuNimi">jokuNimi</th>
+                    </tr>
+                </thead>
                 <tbody>{
                     users.map((user, index) => 
                     <tr key={index}>

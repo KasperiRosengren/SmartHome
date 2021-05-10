@@ -51,14 +51,10 @@ def mysql_select():
 
     cursor = mysql.connection.cursor()
     cursor.execute(f"SELECT * FROM {table}")
-    
+    row_headers=[x[0] for x in cursor.description] #this will extract row headers
     myresult = cursor.fetchall()
-
-    result = {"id":[], "jokuNimi":[]}
-
-    for x in myresult:
-        print(x)
-        result["id"].append(x[0])
-        result["jokuNimi"].append(x[1])
-    print(result)
-    return '{"1": "joku", "2": "toinen", "3": "kukkuu"}'
+    
+    json_data=[]
+    for result in myresult:
+        json_data.append(dict(zip(row_headers,result)))
+    return jsonify(json_data)
