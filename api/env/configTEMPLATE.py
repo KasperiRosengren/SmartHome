@@ -2,6 +2,7 @@ class TestConfig(object):
     DEBUG = True
     TESTING = True
 
+    SECRET_KEY = "YourTopSecretKey"
     #Database config
     MYSQL_HOST = 'HOST URL'
     MYSQL_USER = 'HOST USERNAME'

@@ -23,7 +23,7 @@ FROM zone
 WHERE name = zoneName;
 
 IF existingID != 0 THEN
-	SELECT `Zone already exists with ID: `existingID;
+	SELECT `Zone already exists`;
     LEAVE thisprocedure;
 END IF;
 

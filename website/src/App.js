@@ -14,21 +14,11 @@ function App() {
       <BrowserRouter>
         <div className="NavBar">
           <ul className="TopNavList">
-            <li className="TopNavItem">
-              <Link to="/"> Home </Link>{' '}
-            </li>
-            <li className="TopNavItem">
-              <Link to="/about"> About </Link>{' '}
-            </li>
-            <li className="TopNavItem">
-              <Link to="/data"> Data </Link>{' '}
-            </li>
-            <li className="TopNavItem">
-              <Link to="/mqtt"> Mqtt </Link>{' '}
-            </li>
-            <li className="TopNavItem">
-              <Link to="/mysql"> Mysql </Link>{' '}
-            </li>
+            <li className="TopNavItem"> <Link to="/"> Home </Link>{' '}</li>
+            <li className="TopNavItem"> <Link to="/about"> About </Link>{' '}</li>
+            <li className="TopNavItem"> <Link to="/data"> Data </Link>{' '}</li>
+            <li className="TopNavItem"> <Link to="/mqtt"> Mqtt </Link>{' '}</li>
+            <li className="TopNavItem"> <Link to="/mysql"> Mysql </Link>{' '}</li>
           </ul>
         </div>
         <div className="PageContent">

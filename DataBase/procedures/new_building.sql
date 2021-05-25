@@ -12,7 +12,7 @@ FROM building
 WHERE name = builName;
 
 IF existingID != 0 THEN
-	SELECT `Building already exists with ID: `existingID;
+	SELECT `Building already exists`;
     LEAVE thisprocedure;
 END IF;
 
