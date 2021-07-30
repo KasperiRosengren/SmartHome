@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-
+/*
 const colorPickerStyleRed = {
     color: 'black',
     backgroundColor: 'red'
@@ -15,7 +15,7 @@ const colorPickerStyleGreen = {
     backgroundColor: 'green'
 }
 
-/*
+
 export default class Light extends React.Component {
     render() {
         let patternlist = this.props.info.patterns.map((pattern, index)=>{
@@ -45,9 +45,10 @@ const Light = props =>{
     const [light, setLight] = useState({name: props.info.name, patterns: props.info.patterns})
     const [selected, setSelected] = useState({pattern: props.info.statusPattern, color: props.info.statusValue})
     const colorWheel = ['red', 'green', 'blue', 'yellow', 'black']
-
+    console.log(light)
     let colorlist = colorWheel.map((colorName, index)=>{
         return <button
+                key={index}
                 className="colorbox"
                 style={{backgroundColor: colorName}}
                 onClick={sendColor => { 

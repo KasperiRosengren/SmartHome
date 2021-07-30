@@ -6,11 +6,11 @@ import Data from './components/Data';
 import Mqtt from './components/Mqtt';
 import Mysql from './components/Mysql';
 import Devices from './components/Devices';
-
 import LayoutTest from './components/LayoutTest';
 
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+//import io from 'socket.io-client'
 
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
 function App() {
   return (

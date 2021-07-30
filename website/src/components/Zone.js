@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-//import RealZone from './Visualization/RealZone';
 import ZoneTestThing from './Visualization/ZoneTestThing'
 import io from 'socket.io-client'
 
 function Data(){
-  const [buildings, setBuildings] = useState([])
+  const [zones, setZones] = useState(this.props.zones)
   //Sets buildings like = buildName: NiceBuilding, addr: MyStreet 30, Zones: [zone1, zone2, zone3]
   //All buyilding are objects in a array
   useEffect(() => {

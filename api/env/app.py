@@ -1,61 +1,26 @@
 import time
+import eventlet
 from flask import Flask, request, jsonify, session
 from flask_mqtt import Mqtt
 from flask_mysqldb import MySQL
 from urllib.parse import unquote_plus
 from urllib.parse import unquote
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, join_room, leave_room, send, emit
+from flask_cors import CORS
 
 app = Flask(__name__)
 
-# Maybe I need to add every session into a list? or maybe a dictionary?
-# sessions.append(session)      or something like that
-#  with dict I could store every topic for specific user
-#
-
-# Or maybe I need to create a dictionary for topics
-# And someway add the sessions into every topic
-# they have access to
-# example = [{'UserID': 1, 'topics': ['building/zone/device/datatype', 'building/zone/device/datatype']},
-#           {'UserID': 2, 'topics': ['building/zone/device/datatype', 'building/zone/device/datatype']}]
-
-# Maybe I just store the topics on Front end and when I get new mqtt message
-# I send the topic to every session and then the frontend answers if
-# that is it's topic or not
-# if it is, then the message + gets sent to the front end and it can store the message on there
-
-# Or maybe send all topics for the specific user to frontend
-# and then React-mqtt can subscribe to those topics
-
-# Try subscribing to same topic twice
-# build/zone/dev/temp
-# AND
-# build/zone/#
-# OR
-# build/zone/+/temp
-#
-# Depending on what the user needs
-
-# Create a room for each zone
-# Add sockets to rooms based on access level
-
-# I need API path for sending button values from react to mqtt
-
-
 #configuration
+eventlet.monkey_patch()
 app.config.from_object('config.TestConfig')
+#CORS(app, cors_allowed_origins='*')
 mqtt = Mqtt(app)
 mysql = MySQL(app)
-socketio = SocketIO(app)
+socketio = SocketIO(app, debug=True, host="0.0.0.0", port=5000, cors_allowed_origins='*')
+print('Starting up')
+datatypelist = []
+#region TestData
 
-if __name__ == '__main__':
-    socketio.run(app)
-#
-#
-#
-#
-#
-#
 disIsGreatData = [{
       'zone': "Kitchen",    
       'temperature': 
@@ -66,7 +31,7 @@ disIsGreatData = [{
       'humidity': 
               {
                   'timestamp': ['05:00', '05:15', '05:30', '05:45'],
-                  'values': ['20', '24', '27', '36']
+                  'values': ['22', '27', '30', '40']
               },
                
       'outlets':
@@ -95,7 +60,7 @@ disIsGreatData = [{
       'humidity': 
               {
                   'timestamp': ['05:00', '05:15', '05:30', '05:45'],
-                  'values': ['20', '24', '27', '36']
+                  'values': ['22', '27', '30', '40']
               },
                
       'outlets':
@@ -124,7 +89,7 @@ disIsGreatData = [{
       'humidity': 
               {
                   'timestamp': ['05:00', '05:15', '05:30', '05:45'],
-                  'values': ['20', '24', '27', '36']
+                  'values': ['22', '27', '30', '40']
               },
                
       'outlets':
@@ -151,7 +116,7 @@ disIsGreatData = [{
       'humidity': 
               {
                   'timestamp': ['05:00', '05:15', '05:30', '05:45'],
-                  'values': ['20', '24', '27', '36']
+                  'values': ['22', '27', '30', '40']
               },
                
       'outlets':
@@ -172,12 +137,12 @@ disIsGreatData = [{
                 ]
   }]
 
+#endregion
 
+#region TestAPI
 @app.route('/api/test/test', methods = ['POST', 'GET'])
 def api_test_test():
     return jsonify(disIsGreatData)
-
-
 
 
 @app.route('/api/new/test', methods = ['POST'])
@@ -240,18 +205,7 @@ def api_new_test2():
                     return {"result": "success"}
     return {"result": "failure"}
 
-#
-#
-#
-#
-#
-#
-
-
-
-
-
-
+#endregion
 
 
 
@@ -270,11 +224,64 @@ mqtt_messages = [{
 def get_current_time():
     return {'time': time.localtime()}
 
-### Start of mqtt settings
+
+
+
+#region MQTT
+
+
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
+    print('MQTT connected')
     mqtt.subscribe('goodtopic')
     mqtt.subscribe('test')
+
+def init_mqtt_topics_mysql():
+
+    cursor = mysql.connection.cursor()
+    cursor.execute(f"SELECT Building, Zone, Device FROM mqtt_topics")
+    row_headers=[x[0] for x in cursor.description] #this will extract row headers
+    myresult = cursor.fetchall()
+    
+    json_data=[]
+    for result in myresult:
+        json_data.append(dict(zip(row_headers,result)))
+    cursor.close()
+    mydevices = []
+    for data in json_data:
+        topicbeginning = f"{data['Building']}/{data['Zone']}/{data['Device']}"
+        mydevices.append(topicbeginning)
+
+    cursor = mysql.connection.cursor()
+    cursor.execute(f"DESCRIBE devices")
+    mydatatypes = cursor.fetchall()
+    cursor.close()
+    
+    dataList = []
+    for datatype in mydatatypes:
+        dataList.append(datatype)
+    del dataList[0:5]
+    datatypes = []
+    for datatype in dataList:
+        topicend = datatype[0]
+        datatypelist.append(topicend)
+        datatypes.append(topicend)
+
+    topiclist = []
+    for device in mydevices:
+        for datatype in datatypes:
+            thistopic = (f'{device}/{datatype}')
+            topiclist.append(thistopic)
+            
+    
+    for topic in topiclist:
+        print(topic)
+        mqtt.subscribe(topic)
+
+    print('All topics subscribed to!')
+
+
+
 
 @mqtt.on_message()
 def handle_mqtt_message(client, userdata, message):
@@ -282,19 +289,114 @@ def handle_mqtt_message(client, userdata, message):
         topic=message.topic,
         payload=message.payload.decode()
     )
-    print(data)
-    for thistopic in mqtt_messages:
-        if thistopic['topic'] == data['topic']:
-            thistopic['message'] = data['payload']
-            return
+    #print(data)
+    topicSplitted = data['topic'].split('/')
+    Building = topicSplitted[0]
+    Zone = topicSplitted[1]
+    Device = topicSplitted[2]
+    DataType = topicSplitted[3]
+    #print(f'Building: {topicSplitted[0]}, Zone: {topicSplitted[1]}, Device: {topicSplitted[2]}, DataType: {topicSplitted[3]}')
+    print(f'Building: {Building}, Zone: {Zone}, Device: {Device}, DataType: {DataType}')
+    print(f'Topic: {data["topic"]}, with data: {data["payload"]}')
+    #socketio.emit('roomData', {'tst': '06:00', 'temp': '17', 'hum': '22'}, namespace=(f'/{data["topic"]}'))
+    #for thistopic in mqtt_messages:
+        #if thistopic['topic'] == data['topic']:
+            #socketio.emit('roomData', {'tst': '06:00', 'temp': '17', 'hum': '22'}, room=data['topic'])
+            
+            #thistopic['message'] = data['payload']
+            #return
 
-    mqtt_messages.append({'topic': data['topic'], 'message': data['payload']})
+    if DataType in datatypelist:
+        if DataType == 'lights' or DataType == 'outlets' or DataType == 'doorlock':
+            #This shouldn't even happen!?!?!
+            pass
+        elif DataType == "keybad":
+            print("adding data to keybad")
+            cursor = mysql.connection.cursor()
+            cursor.execute(f'CALL add_data_keybad({Building},{Zone},{Device},{data["payload"]})')
+            myresult = cursor.fetchone()
+            cursor.close()
+            #Send the data to MySQL
+        else:
+            print(f'Add some {DataType} data')
+            #Send the new data to MySQL
+            cursor = mysql.connection.cursor()
+            cursor.execute(f'CALL add_data_{DataType}({Building},{Zone},{Device},{data["payload"]})')
+            myresult = cursor.fetchone()
+            cursor.close()
 
-################################
-########        API     ########
-################################
+            #Send the data to socketio
+            socketio.emit('newData', {'tst': '06:00', 'temp': '17', 'hum': '22'}, namespace=(f'/{Building}/{Zone}'), room=DataType)
 
-########       MQTT     ########
+
+
+
+#endregion
+
+
+
+
+#region SocketIO
+
+
+@socketio.on('message')
+def handle_message(data):
+    socketio.emit('some event', {'data': 42})
+    print('received message: ' + data)
+
+
+@socketio.on('join')
+def on_join(data):
+    username = data['username']
+    room = data['room']
+    join_room(room)
+    send(username + ' has entered the room.', to=room)
+    print(f'{username} has joined room: {room}')
+
+@socketio.on('leave')
+def on_leave(data):
+    username = data['username']
+    room = data['room']
+    leave_room(room)
+    send(username + ' has left the room.', to=room)
+    print(f'{username} has left room: {room}')
+
+@socketio.on('connect')
+def test_connect():
+    emit('my response', {'data': 'Connected'})
+    print('Client connected')
+
+@socketio.on('disconnect')
+def test_disconnect():
+    print('Client disconnected')
+
+
+@socketio.on('tester', namespace='/building/Kitchen')
+def building_kitchen_tester(data):
+    print(f'Kitchen: {data}')
+
+@socketio.on('tester', namespace='/building/BedRoom')
+def building_bedroom_tester(data):
+    print(f'BedRoom: {data}')
+
+@socketio.on('tester', namespace='/building/Hall')
+def building_hall_tester(data):
+    print(f'Hall: {data}')
+
+@socketio.on('tester', namespace='/building/LivingRoom')
+def building_livingroom_tester(data):
+    print(f'LivingRoom: {data}')
+
+
+#endregion
+
+
+
+
+
+#region API
+
+#region MQTT
 @app.route('/api/mqtt/get/message/all')
 def mqtt_get_message_all():
     return jsonify(mqtt_messages)
@@ -323,10 +425,253 @@ def mqtt_subscribe_topic():
     mqtt_messages.append({'topic': topic, 'message': 'subscibed'})
     mqtt.subscribe(topic)
     return jsonify(mqtt_messages)
+#endregion  
+
+#region Control
+
+#region Devices
+#region Outlets
+
+#Controll specific outlets status
+@app.route('/api/control/device/outlet/status', methods = ['POST'])
+def api_control_device_outlet_status():
+    outlet_command = request.get_json()
+    building = outlet_command.get('building')
+    zone = outlet_command.get('zone')
+    outletName = outlet_command.get('name')
+    command = outlet_command.get('command')
+    #Check if user is logged in
+    if session.get('userID'):
+        #User is logged in, and found the userID
+
+        #Check if user has permission to control this device
+        #Get user access to zone's devices
+        userID = session.get('userID')
+        cursor = mysql.connection.cursor()
+        cursor.execute(f'CALL get_user_access_zone_status({userID},"{building}","{zone}")')
+        #results = cursor.fetchall()
+        row_headers=[x[0] for x in cursor.description] #this will extract row headers
+        myresult = cursor.fetchall()
     
+        json_data=[]
+        for result in myresult:
+            json_data.append(dict(zip(row_headers,result)))
+        cursor.close()
+        userAccess = []
+        for data in json_data:
+            userAccess.append(data['StatusAccess'])
+        #userAccess = []
+        #for access in results:
+            #userAccess.append(access)
+        
+        #cursor.close()
+
+        print(userAccess)
+        allowedAccess = ['F', 'E', 'D', 'C', '7', '6', '5', '4']
+        #Check if user has permission to control device
+
+        if userAccess == 'Building does not exist':
+            return {"result": "failure", "reason": "Building does not exist"}
+
+        elif userAccess == 'This zone does not exist in this building':
+            return {"result": "failure", "reason": "This zone does not exist in this building"}
+
+        for allow in allowedAccess:
+            for user in userAccess:
+                print(f'Compare {allow} to {user}')
+                if allow == user:
+                    #User has permission to control device
+                    #Send command to
+                    print('Access granted')
+                    return {"result": "success"}
+                    
+        
+        #User did not have permission
+        return {"result": "failure", "reason": "user does not have permission for this zone"}
+        #IF permission == true
+            #Send command to mqtt
+            #Send command to MySQL
+            #Send command to SocketIO
+            #Return result success
+        
+        #Elif   Permission == False
+            #Return no access to this device
+
+        #Elif   building/zone/device not found
+            #Specify which wasn't found and return that as error not found
+        
+        #Else
+            #Result server error
+    else:
+        return {"result": "failure", "reason": "not logged in"}
+
+    
+    return {"result": "failure"}
 
 
-########       MySQL     ########
+#endregion Outlets
+
+#region Lights
+
+@app.route('/api/control/device/light/status', methods = ['POST'])
+def api_control_device_light_status():
+    light_command = request.get_json()
+    building = outlet_command.get('building')
+    zone = outlet_command.get('zone')
+    lightName = outlet_command.get('name')
+    status = outlet_command.get('status')
+
+    #Check if user has permission to control this device
+    #IF permission == true
+        #Send command to mqtt
+        #Send command to MySQL
+        #Send command to SocketIO
+        #Return result success
+    
+    #Elif   Permission == False
+        #Return no access to this device
+
+    #Elif   building/zone/device not found
+        #Specify which wasn't found and return that as error not found
+    
+    #Else
+        #Result server error
+
+    
+    return {"result": "failure"}
+
+
+
+
+
+@app.route('/api/control/device/light/pattern', methods = ['POST'])
+def api_control_device_light_pattern():
+    light_command = request.get_json()
+    building = outlet_command.get('building')
+    zone = outlet_command.get('zone')
+    lightName = outlet_command.get('name')
+    pattern = outlet_command.get('pattern')
+
+    #Check if user has permission to control this device
+    #IF permission == true
+        #Send command to mqtt
+        #Send command to MySQL
+        #Send command to SocketIO
+        #Return result success
+    
+    #Elif   Permission == False
+        #Return no access to this device
+
+    #Elif   building/zone/device not found
+        #Specify which wasn't found and return that as error not found
+    
+    #Else
+        #Result server error
+
+    
+    return {"result": "failure"}
+
+@app.route('/api/control/device/light/speed', methods = ['POST'])
+def api_control_device_light_speed():
+    light_command = request.get_json()
+    building = outlet_command.get('building')
+    zone = outlet_command.get('zone')
+    lightName = outlet_command.get('name')
+    speed = outlet_command.get('speed')
+
+    #Check if user has permission to control this device
+    #IF permission == true
+        #Send command to mqtt
+        #Send command to MySQL
+        #Send command to SocketIO
+        #Return result success
+    
+    #Elif   Permission == False
+        #Return no access to this device
+
+    #Elif   building/zone/device not found
+        #Specify which wasn't found and return that as error not found
+    
+    #Else
+        #Result server error
+
+    
+    return {"result": "failure"}
+
+@app.route('/api/control/device/light/color', methods = ['POST'])
+def api_control_device_light_color():
+    light_command = request.get_json()
+    building = outlet_command.get('building')
+    zone = outlet_command.get('zone')
+    lightName = outlet_command.get('name')
+    color = outlet_command.get('color')
+
+    #Check if user has permission to control this device
+    #IF permission == true
+        #Send command to mqtt
+        #Send command to MySQL
+        #Send command to SocketIO
+        #Return result success
+    
+    #Elif   Permission == False
+        #Return no access to this device
+
+    #Elif   building/zone/device not found
+        #Specify which wasn't found and return that as error not found
+    
+    #Else
+        #Result server error
+
+    
+    return {"result": "failure"}
+
+
+
+
+#endregion Lights
+
+
+#endregion Devices
+#endregion Control
+
+
+
+#region Alter
+#region Oultets
+#Controll specific outlet's name
+@app.route('/api/alter/device/outlet/name', methods = ['POST'])
+def api_alter_device_outlet_name():
+    outlet_command = request.get_json()
+    building = outlet_command.get('building')
+    zone = outlet_command.get('zone')
+    outletName = outlet_command.get('name')
+    newName = outlet_command.get('newname')
+
+    #Check if user has permission to control this device
+    #IF permission == true
+        #Send command to mqtt
+        #Send command to MySQL
+        #Send command to SocketIO
+        #Return result success
+    
+    #Elif   Permission == False
+        #Return no access to this device
+
+    #Elif   building/zone/device not found
+        #Specify which wasn't found and return that as error not found
+    
+    #Else
+        #Result server error
+
+    
+    return {"result": "failure"}
+
+
+#endregion Outlets
+
+#endregion Alter
+#region MySQL
+
 @app.route('/mysql', methods = ['POST'])
 def mysql_post():
     mysql_json = request.get_json()
@@ -336,6 +681,7 @@ def mysql_post():
     cursor = mysql.connection.cursor()
     cursor.execute(f"INSERT INTO testi (jokuNimi) VALUES('{jokuNimi}')")
     mysql.connection.commit()
+    cursor.close()
     return 'message sent'
 
 
@@ -376,14 +722,24 @@ def mysql_user_devices():
         return {"result": "failure"}
 
 
+@app.route('/api/mysql/user/data', methods = ['POST', 'GET'])
+def api_mysq_user_data():
+    #Get all zones and their data that belongs to the logged user
+    if session.get('userName'):
+        return jsonify(disIsGreatData)
+    else:
+        return {"result": "failure", "reason": "not logged in"}
+#endregion
 
-########       AUTH     ########
+
+#region Authentication
 @app.route('/api/auth/login', methods = ['POST'])
 def auth_login():
+    init_mqtt_topics_mysql()
     mysql_json = request.get_json()
     username = mysql_json.get('username')
     password = mysql_json.get('password')           
-    
+    print(username)
     cursor = mysql.connection.cursor()
     #Fetch the user id for the given name and password
     cursor.execute(f'SELECT idusers, username FROM users WHERE username="{username}" AND password="{password}"')
@@ -430,6 +786,18 @@ def auth_logout():
 
 @app.route('/api/auth/whoami', methods = ['GET'])
 def auth_whoami():
+    init_mqtt_topics_mysql()
     if session.get('userID'):
         return {'name': session['userName'], 'id': session['userID']}
     return {'name': "You are not logged in", 'id': "You are not logged in"}
+#endregion
+
+#endregion
+
+
+print('All run')
+
+if __name__ == '__main__':
+    #socketio.run(app)
+    socketio.run(app, host="0.0.0.0", port=5000)
+    #app.run(debug=True)

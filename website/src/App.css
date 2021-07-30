@@ -153,12 +153,16 @@ a:-webkit-any-link {
 }
 
 .graph{
-
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
   background-color: #36393fff;
   border-radius: 5%;
-
   width: 100%;
+}
+
+.chartTitle{
+  font-size: 90%;
+  text-align: center;
+  margin: 0;
 }
 
 .leds{
