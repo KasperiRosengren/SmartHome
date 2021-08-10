@@ -8,6 +8,7 @@ class TestConfig(object):
     MYSQL_USER = 'HOST USERNAME'
     MYSQL_PASSWORD = 'HOST PASSWORD'
     MYSQL_DB = 'HOST DB NAME'
+    MYSQL_PORT = 3306 #default
 
     #MQTT config
     MQTT_BROKER_URL = 'HOST URL'

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 //import RealZone from './Visualization/RealZone';
-import TestZoneModular from './Visualization/TestZoneModular'
+import TestZoneModular from './Devices/TestZoneModular'
 import io from 'socket.io-client'
 /*
 function Devices(){

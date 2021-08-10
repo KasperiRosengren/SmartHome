@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 //import LineChartTest from './LineChartTest';
-import Outlet from './Outlet';
-import Light from './Light';
-import ChartLine from './ChartLine';
+import Outlet from './Visuals/Outlet';
+import Light from './Visuals/Light';
+import ChartLine from './Visuals/ChartLine';
 import io from 'socket.io-client'
 //import { socket } from '../../App';
 

@@ -205,6 +205,51 @@ def api_new_test2():
                     return {"result": "success"}
     return {"result": "failure"}
 
+
+@app.route('/api/get/frontend/init', methods = ['GET'])
+def api_get_frontend_init():
+    #Check if user is logged in
+    #If not, return result failure
+    #Otherwise continue on
+    if session.get('userID'):
+        userID = session.get('userID')
+        cursor = mysql.connection.cursor()
+        cursor.execute(f"CALL frontend_init({userID})")
+        row_headers=[x[0] for x in cursor.description] #this will extract row headers
+        myresult = cursor.fetchall()
+        
+        json_data=[]
+        for result in myresult:
+            json_data.append(dict(zip(row_headers,result)))
+        cursor.close()
+        print(json_data)
+        return jsonify(json_data)
+    
+    else:
+        return {"result": "failure"}
+
+
+
+@app.route('/api/get/frontend/test/init', methods = ['GET'])
+def api_get_frontend_test_init():
+    #Check if user is logged in
+    #If not, return result failure
+    #Otherwise continue on
+    cursor = mysql.connection.cursor()
+    cursor.execute(f'CALL new_frontend_init("SuperAdmin")')
+    row_headers=[x[0] for x in cursor.description] #this will extract row headers
+    myresult = cursor.fetchall()
+        
+    json_data=[]
+    for result in myresult:
+        json_data.append(dict(zip(row_headers,result)))
+    cursor.close()
+    print(json_data)
+    return jsonify(json_data)
+    
+
+
+
 #endregion
 
 
@@ -290,6 +335,7 @@ def handle_mqtt_message(client, userdata, message):
         payload=message.payload.decode()
     )
     #print(data)
+    #
     topicSplitted = data['topic'].split('/')
     Building = topicSplitted[0]
     Zone = topicSplitted[1]
@@ -321,7 +367,7 @@ def handle_mqtt_message(client, userdata, message):
             print(f'Add some {DataType} data')
             #Send the new data to MySQL
             cursor = mysql.connection.cursor()
-            cursor.execute(f'CALL add_data_{DataType}({Building},{Zone},{Device},{data["payload"]})')
+            cursor.execute(f'CALL add_data_{DataType}("{Building}","{Zone}","{Device}","{data["payload"]}")')
             myresult = cursor.fetchone()
             cursor.close()
 
