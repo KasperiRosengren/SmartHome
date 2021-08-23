@@ -18,20 +18,17 @@ function DataTest(){
   }, []);
 
 
-  useEffect(() => console.log(buildings), [buildings]);
+  //useEffect(() => console.log(buildings), [buildings]);
 
 
 
   const zonelist = Object.keys(buildings).map((building, index) =>{
-    //console.log(buildings[building].outlets);
-
     return <Zone dataTo={buildings[building]} key={index}/>
   })
 
   return (
     <div className="LayoutTestMain">
       {zonelist}
-        <p>checklog</p>
     </div>
   );
 

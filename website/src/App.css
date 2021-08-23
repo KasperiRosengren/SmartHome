@@ -230,3 +230,25 @@ a:-webkit-any-link {
   width: 33%;
   height: 2em;
 }
+
+
+
+
+.thermgauge{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-around;
+}
+
+.thermgaugeinside{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.thermgaugetext{
+  font-size: 2rem;
+}

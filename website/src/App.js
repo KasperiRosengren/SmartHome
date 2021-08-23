@@ -4,6 +4,7 @@ import Home from './components/Home';
 import About from './components/About';
 import Devices from './components/Devices';
 import DataTest from './components/DataTest';
+import Temperatures from './components/Data/Visuals/Weather/Charts/Temperatures';
 
 //import io from 'socket.io-client'
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/about" component={About} />
             <Route path="/devices" component={Devices} />
             <Route path="/datatest" component={DataTest} />
+            <Route path="/:buildingName/:zoneName/weather/temperature/all" component={Temperatures} />
           </Switch>
         </div>
       </BrowserRouter>
