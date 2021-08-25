@@ -1,0 +1,254 @@
+.PageMain{
+  color: white;
+}
+
+.PageContent{
+  font-size: 2em;
+}
+
+.AboutPageMain {
+  text-align: center;
+}
+
+.DevicesPageMain{
+  text-align: center;
+}
+
+.MqttPageMain {
+  text-align: center;
+}
+
+.MysqlPageMain {
+  text-align: center;
+}
+
+.HomePageMain{
+  text-align: center;
+}
+
+.DataPageMain{
+  margin: 0.5em;
+}
+
+.NavBar{
+  background-color: #18191C;
+  text-align: right;
+}
+
+.TopNavList{
+  margin: 0em;
+  padding-left: 0em;
+  list-style-type: none;
+}
+
+.TopNavItem{
+  display: inline;
+  text-decoration: none;
+  font-size: 2em;
+}
+
+a:-webkit-any-link {
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  text-decoration-style: none;
+  text-decoration-color: none;
+}
+
+.MysqlTable{
+  margin-left: auto;
+  margin-right: auto;
+  border-spacing: 1em;
+  border-collapse: separate;
+}
+
+.MqttTable{
+  margin-left: auto;
+  margin-right: auto;
+  border-spacing: 1em;
+  border-collapse: separate;
+}
+
+#users_ID{
+  width: 25%;
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+#users_jokuNimi{
+  width: 75%;
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+.charts{
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 1rem;
+}
+
+.chart{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  background-color: #202225ff;
+  border-radius: 5%;
+}
+
+.chart_title{
+  margin: 0;
+}
+
+
+.LayoutTestMain{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  gap: 1rem;
+
+  align-items: flex-start;
+}
+
+
+
+.zone{
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  background-color: #202225ff;
+  border-radius: 5%;
+
+  padding: 5%;
+  margin: 10px;
+
+  row-gap: 0.5em;
+}
+
+.zoneTitle{
+  text-align: center;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  background-color: #36393fff;
+  border-radius: 20%;
+
+  width: 100%;
+}
+
+.outlets{
+  display: flex;
+
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  background-color: #36393fff;
+  border-radius: 5%;
+
+  width: 100%;
+}
+
+.outlet{
+  margin: 0.25em;
+}
+
+.graph{
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  background-color: #36393fff;
+  border-radius: 5%;
+  width: 100%;
+}
+
+.chartTitle{
+  font-size: 90%;
+  text-align: center;
+  margin: 0;
+}
+
+.leds{
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  background-color: #36393fff;
+  border-radius: 5%;
+
+  width: 100%;
+}
+
+.info{
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  background-color: #3c414fff;
+  border-radius: 5%;
+
+  padding: 3%;
+}
+
+.ledName{
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  background-color: #2f3136ff;
+  border-radius: 5%;
+
+  text-align: center;
+  font-size: 130%;
+}
+
+.patterns{
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  background-color: #2f3136ff;
+  border-radius: 5%;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pattern{
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  background-color: #49443cff;
+  border-radius: 5%;
+  margin: 5px;
+}
+
+.colorpicker{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  align-items: stretch;
+  justify-content: center;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  background-color: #3c414fff;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.colorbox{
+  width: 33%;
+  height: 2em;
+}
+
+
+
+
+.thermgauge{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-around;
+}
+
+.thermgaugeinside{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.thermgaugetext{
+  font-size: 2rem;
+}
