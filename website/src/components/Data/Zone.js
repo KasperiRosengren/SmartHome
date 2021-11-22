@@ -57,7 +57,7 @@ const Zone = props =>{
     let lightlist = lights.map((light, index)=>{
       if(Object.keys(JSON.parse(light)) !== 0){
         return (
-          <div>
+          <div className="lights">
             {
               JSON.parse(light).map((data, dataindex)=>{
                 //console.log(data.lights)
@@ -78,8 +78,11 @@ const Zone = props =>{
 
     return(
       <div className="zone">
-        <div className="zoneTitle">{props.dataTo.Building + " / " + props.dataTo.Zone}</div>
         <div>
+        <p className="zoneTitle">{props.dataTo.Building + " / " + props.dataTo.Zone}</p>
+        </div>
+        <div>
+          <p className="zoneTitle">Outlets</p>
           {outletboxlist}
         </div>
         <div>
@@ -88,7 +91,8 @@ const Zone = props =>{
         </div>
         <div>
           <p className="zoneTitle">Lights</p>
-          {lightlist}
+          <div>{lightlist}</div>
+          
         </div>
       </div>
     )

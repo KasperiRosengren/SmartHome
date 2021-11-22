@@ -25,18 +25,24 @@ const BoxOpener = props =>{
         return(
             Object.entries(outletbox[1].outlets).map((outlet, outletindex)=>{
                 //console.log(outlet)
-                return(<Outlet key={outletindex}
-                    outletoriginal={outlet[0]}
-                    box={outletbox[0]}
-                    name={outlet[1].name}
-                    zone={zoneName}
-                    value={outlet[1].status}/>)
+                return(
+                        <Outlet key={outletindex}
+                            outletoriginal={outlet[0]}
+                            box={outletbox[0]}
+                            name={outlet[1].name}
+                            zone={zoneName}
+                            value={outlet[1].status}/>
+                    )
             })
         )
     })
    return(
-       <div className="outlets">
-           {outletlist}
+       <div className="outletBoxInner">
+            <p className="outletBoxTitle">{outletboxes[0][1].name}</p>
+            <div className="outlets">
+                {outletlist}
+            </div>
+           
        </div>
    )
 }

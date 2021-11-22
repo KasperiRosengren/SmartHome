@@ -18,9 +18,10 @@ const Temperature = props =>{
             Object.values(JSON.parse(weat[1])).map((temperature, index)=>{
                 if(temperature.temperature.hasOwnProperty('value')){
                     return(
-                        <div>
-                            <Link to={`/${buildingName}/${zoneName}/weather/temperature/all`} target="_blank" rel="noopener noreferrer" params={{ building: buildingName, zone: zoneName}}>
-                                <Thermometer
+                        <div className="thermgaugeInner">
+                            <div>
+                                <Link to={`/${buildingName}/${zoneName}/weather/temperature/all`} target="_blank" rel="noopener noreferrer" params={{ building: buildingName, zone: zoneName}}>
+                                    <Thermometer
                                     theme="dark"
                                     value={temperature.temperature.value}
                                     max="50"
@@ -28,9 +29,14 @@ const Temperature = props =>{
                                     format="°C"
                                     size="large"
                                     height="400"
-                                />
-                            </Link>
-                        </div>
+                                    />
+                                </Link>
+                            </div>
+                            <div className="thermgaugeText">
+                                <p>Temp.</p>
+                                <p>{temperature.temperature.value} C°</p>
+                            </div>
+                            </div>
                     )
                 }
             })
@@ -42,7 +48,7 @@ const Temperature = props =>{
     //<div  onClick={()=>window.open("http://localhost:3000/"+buildingName+"/"+zoneName+"/weather/temperature/all")}></div>
     
    return(
-       <div className="thermgaugeinside">
+       <div>
 
            {weatherlist}
        </div>

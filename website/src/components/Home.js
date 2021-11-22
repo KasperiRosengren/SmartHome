@@ -57,8 +57,8 @@ function Home(){
         <p>This is our nice home page for SaMi</p>
         <h1>Login</h1>
           <div>
-            <input placeholder="Username" name="username" value={user.username} onChange={inputChanged} />
-            <input placeholder="Password" name="password" value={user.password} onChange={inputChanged}/>
+            <input type="text" placeholder="Username" name="username" value={user.username} onChange={inputChanged} />
+            <input type="password" placeholder="Password" name="password" value={user.password} onChange={inputChanged}/>
             <button onClick={sendLogin}>Send</button>
           </div>
 
