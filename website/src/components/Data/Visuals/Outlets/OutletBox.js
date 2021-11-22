@@ -26,7 +26,11 @@ const OutletBox = props =>{
                 return(
                     Object.entries(outletbox).map((thisBox, thisIndex)=>{
                         //console.log(thisBox)
-                        return(<BoxOpener key={thisIndex} info={thisBox} zone={zoneName}/>)
+                        return(
+                            <div>
+                                <BoxOpener key={thisIndex} info={thisBox} zone={zoneName}/>
+                            </div>
+                        )
                     })
                 )
             }
@@ -36,7 +40,7 @@ const OutletBox = props =>{
 
 
    return(
-       <div>
+       <div className="outletBoxes">
            {outletboxlist}
        </div>
    )

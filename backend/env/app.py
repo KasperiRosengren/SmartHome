@@ -2,10 +2,10 @@ import paho.mqtt.client as mqtt
 import mysql.connector
 
 mydb = mysql.connector.connect(
-  host='',
-  user="",
-  password="",
-  database=""
+  host='192.168.1.171',
+  user="myski",
+  password="m1cr0s4m1",
+  database="test5"
 )
 
 datatypelist = []

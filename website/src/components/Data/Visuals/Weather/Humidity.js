@@ -12,15 +12,26 @@ const Humidity = props =>{
             Object.values(JSON.parse(weat[1])).map((humidity, index)=>{
                 if(humidity.humidity.hasOwnProperty('value')){
                     return(
-                        <Thermometer
-                            theme="dark"
-                            value={humidity.humidity.value}
-                            max="100"
-                            steps="5"
-                            format="%"
-                            size="large"
-                            height="400"
-                        />
+                        <div className="thermgaugeInner">
+                            <div>
+                                <Thermometer
+                                    theme="dark"
+                                    value={humidity.humidity.value}
+                                    max="100"
+                                    steps="5"
+                                    format="%"
+                                    size="large"
+                                    height="400"
+                                />
+                            </div>
+                            <div className="thermgaugeText">
+                                <p>Hum.</p>
+                                <p>{humidity.humidity.value} %</p>
+                            </div>
+                            </div>
+
+
+                        
                     )
                 }
             })

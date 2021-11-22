@@ -19,194 +19,7 @@ mysql = MySQL(app)
 socketio = SocketIO(app, debug=True, host="0.0.0.0", port=5000, cors_allowed_origins='*')
 print('Starting up')
 
-#region TestData
-
-disIsGreatData = [{
-      'zone': "Kitchen",    
-      'temperature': 
-              {
-                  'timestamp': ['05:00', '05:15', '05:30', '05:45'],
-                  'values': ['20', '24', '27', '36']
-              }, 
-      'humidity': 
-              {
-                  'timestamp': ['05:00', '05:15', '05:30', '05:45'],
-                  'values': ['22', '27', '30', '40']
-              },
-               
-      'outlets':
-                [
-                  {'name': "Coffee", 'value':"on"},
-                  {'name': "Microwave", 'value':"off"},
-                  {'name': "Oven", 'value':"off"},
-                  {'name': "Blender", 'value':"off"},
-                  {'name': "Boiler", 'value':"off"}
-                ],
-      'lights':
-                [
-                  {'name': "ceiling", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"blue", 'patterns': ['pattern1', 'pattern2', 'pattern1','pattern1','pattern1','pattern1','pattern1',]},
-                  {'name': "Sink", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"off", 'patterns': ['pattern3', 'pattern2']},
-                  {'name': "Over Oven", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"off", 'patterns': ['pattern1', 'pattern5']},
-                  {'name': "Over Workbench", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"red", 'patterns': ['pattern100', 'pattern2']},
-                  {'name': "Table", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"green", 'patterns': ['pattern12', 'pattern22']}
-                ]
-  }, {
-      'zone': "BedRoom",    
-      'temperature': 
-              {
-                  'timestamp': ['05:00', '05:15', '05:30', '05:45'],
-                  'values': ['20', '24', '27', '36']
-              }, 
-      'humidity': 
-              {
-                  'timestamp': ['05:00', '05:15', '05:30', '05:45'],
-                  'values': ['22', '27', '30', '40']
-              },
-               
-      'outlets':
-                [
-                  {'name': "test", 'value':"on"},
-                  {'name': "test1", 'value':"off"},
-                  {'name': "test2", 'value':"on"},
-                  {'name': "test3", 'value':"off"},
-                  {'name': "test4", 'value':"on"}
-                ],
-      'lights':
-                [
-                  {'name': "ceiling", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"blue", 'patterns': ['pattern1', 'pattern2']},
-                  {'name': "LeftWall", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"off", 'patterns': ['pattern3', 'pattern2']},
-                  {'name': "RightWall", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"off", 'patterns': ['pattern1', 'pattern5']},
-                  {'name': "Couch", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"red", 'patterns': ['pattern100', 'pattern2']},
-                  {'name': "Workbench", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"green", 'patterns': ['pattern12', 'pattern22']}
-                ]
-  }, {
-      'zone': "Hall",    
-      'temperature': 
-              {
-                  'timestamp': ['05:00', '05:15', '05:30', '05:45'],
-                  'values': ['20', '24', '27', '36']
-              }, 
-      'humidity': 
-              {
-                  'timestamp': ['05:00', '05:15', '05:30', '05:45'],
-                  'values': ['22', '27', '30', '40']
-              },
-               
-      'outlets':
-                [
-                  {'name': "test", 'value':"on"},
-                  {'name': "test1", 'value':"off"},
-                  {'name': "test2", 'value':"on"},
-                  {'name': "test3", 'value':"off"},
-                  {'name': "test4", 'value':"on"}
-                ],
-      'lights':
-                [
-                  {'name': "ceiling", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"blue", 'patterns': ['pattern1', 'pattern2']},
-                  {'name': "LeftWall", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"off", 'patterns': ['pattern3', 'pattern2']},
-                  {'name': "RightWall", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"off", 'patterns': ['pattern1', 'pattern5']}
-                ]
-  }, {
-      'zone': "LivingRoom",    
-      'temperature': 
-              {
-                  'timestamp': ['05:00', '05:15', '05:30', '05:45'],
-                  'values': ['20', '24', '27', '36']
-              }, 
-      'humidity': 
-              {
-                  'timestamp': ['05:00', '05:15', '05:30', '05:45'],
-                  'values': ['22', '27', '30', '40']
-              },
-               
-      'outlets':
-                [
-                  {'name': "test", 'value':"on"},
-                  {'name': "test1", 'value':"off"},
-                  {'name': "test2", 'value':"on"},
-                  {'name': "test3", 'value':"off"},
-                  {'name': "test4", 'value':"on"}
-                ],
-      'lights':
-                [
-                  {'name': "ceiling", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"blue", 'patterns': ['pattern1', 'pattern2']},
-                  {'name': "LeftWall", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"off", 'patterns': ['pattern3', 'pattern2']},
-                  {'name': "RightWall", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"off", 'patterns': ['pattern1', 'pattern5']},
-                  {'name': "Couch", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"red", 'patterns': ['pattern100', 'pattern2']},
-                  {'name': "Workbench", 'statusValue':'off', 'statusPattern':'pattern1', 'value':"green", 'patterns': ['pattern12', 'pattern22']}
-                ]
-  }]
-
 #endregion
-
-
-
-
-#region TestAPI
-@app.route('/api/test/test', methods = ['POST', 'GET'])
-def api_test_test():
-    return jsonify(disIsGreatData)
-
-
-@app.route('/api/new/test', methods = ['POST'])
-def api_new_test():
-    outlet_command = request.get_json()
-    zone = outlet_command.get('zone')
-    outletName = outlet_command.get('name')
-    command = outlet_command.get('command')
-
-    for data in disIsGreatData:
-        if zone == data['zone']:
-            for outlet in data['outlets']:
-                if outletName == outlet['name']:
-                    outlet['value'] = command
-                    topic = (f'building/{zone}/device/{outletName}')
-                    mqtt.publish(topic, command)
-                    print(topic)
-                    print(command)
-                    return {"result": "success"}
-    return {"result": "failure"}
-
-
-@app.route('/api/new/test1', methods = ['POST'])
-def api_new_test1():
-    light_command = request.get_json()
-    zone = light_command.get('zone')
-    lightName = light_command.get('name')
-    color = light_command.get('color')
-
-    for data in disIsGreatData:
-        if zone == data['zone']:
-            for light in data['lights']:
-                if lightName == light['name']:
-                    light['statusValue'] = color
-                    topic = (f'building/{zone}/device/{lightName}')
-                    mqtt.publish(topic, color)
-                    print(topic)
-                    print(color)
-                    return {"result": "success"}
-    return {"result": "failure"}
-
-
-
-@app.route('/api/new/test2', methods = ['POST'])
-def api_new_test2():
-    light_command = request.get_json()
-    zone = light_command.get('zone')
-    lightName = light_command.get('name')
-    pattern = light_command.get('pattern')
-
-    for data in disIsGreatData:
-        if zone == data['zone']:
-            for light in data['lights']:
-                if lightName == light['name']:
-                    light['statusPattern'] = pattern
-                    topic = (f'building/{zone}/device/{lightName}')
-                    mqtt.publish(topic, pattern)
-                    print(topic)
-                    print(pattern)
-                    return {"result": "success"}
-    return {"result": "failure"}
 
 
 @app.route('/api/get/frontend/init', methods = ['GET'])
@@ -214,10 +27,11 @@ def api_get_frontend_init():
     #Check if user is logged in
     #If not, return result failure
     #Otherwise continue on
-    if session.get('userID'):
-        userID = session.get('userID')
+    if session.get('userName'):
+        userName = session.get('userName')
+        print(F"User: {userName}")
         cursor = mysql.connection.cursor()
-        cursor.execute(f"CALL frontend_init({userID})")
+        cursor.execute(f"CALL new_frontend_init('{userName}')")
         row_headers=[x[0] for x in cursor.description] #this will extract row headers
         myresult = cursor.fetchall()
         
@@ -242,11 +56,13 @@ def api_get_frontend_test_init():
     cursor.execute(f'CALL new_frontend_init("SuperAdmin")')
     row_headers=[x[0] for x in cursor.description] #this will extract row headers
     myresult = cursor.fetchall()
-        
+    cursor.close()
+    mysql.connection.commit()
+    
     json_data=[]
     for result in myresult:
         json_data.append(dict(zip(row_headers,result)))
-    cursor.close()
+    
     print(json_data)
     return jsonify(json_data)
 
@@ -710,6 +526,8 @@ def api_control_device_light_color():
 
 
 #region Alter
+#This is for altering device names, locations etc.
+
 #region Oultets
 #Controll specific outlet's name
 @app.route('/api/alter/device/outlet/name', methods = ['POST'])
@@ -743,6 +561,8 @@ def api_alter_device_outlet_name():
 #endregion Outlets
 
 #endregion Alter
+
+
 #region MySQL
 
 @app.route('/mysql', methods = ['POST'])
@@ -804,6 +624,256 @@ def api_mysq_user_data():
         return {"result": "failure", "reason": "not logged in"}
 #endregion
 
+
+
+#region Controlpanel
+
+    #region GetData
+#Get all buildings
+@app.route('/api/get/controlpanel/buildings', methods = ['GET'])
+def api_get_controlpanel_buildings():
+    cursor = mysql.connection.cursor()
+    #Fetch the user id for the given name and password
+    cursor.execute(f'SELECT name, address, idbuilding AS id from building')
+    row_headers=[x[0] for x in cursor.description] #this will extract row headers
+    myresult = cursor.fetchall()
+        
+    json_data=[]
+    for result in myresult:
+        json_data.append(dict(zip(row_headers,result)))
+    cursor.close()
+    return jsonify(json_data)
+
+
+
+#Get all zones
+@app.route('/api/get/controlpanel/zones', methods = ['GET'])
+def api_get_controlpanel_zones():
+    cursor = mysql.connection.cursor()
+    #Fetch the user id for the given name and password
+    cursor.execute(f'SELECT b.name AS buildingname, z.name AS zonename, idzone AS id from zone z JOIN building b ON z.idbuilding=b.idbuilding')
+    row_headers=[x[0] for x in cursor.description] #this will extract row headers
+    myresult = cursor.fetchall()
+        
+    json_data=[]
+    for result in myresult:
+        json_data.append(dict(zip(row_headers,result)))
+    cursor.close()
+    return jsonify(json_data)
+
+
+
+
+#Get all devices
+@app.route('/api/get/controlpanel/devices', methods = ['GET'])
+def api_get_controlpanel_devices():
+    cursor = mysql.connection.cursor()
+    #Fetch the user id for the given name and password
+    cursor.execute(f'SELECT b.name AS buildingname, z.name AS zonename, d.name AS devicename, iddevices AS id from devices d JOIN zone z ON d.idzone=z.idzone JOIN building b ON z.idbuilding=b.idbuilding')
+    row_headers=[x[0] for x in cursor.description] #this will extract row headers
+    myresult = cursor.fetchall()
+        
+    json_data=[]
+    for result in myresult:
+        json_data.append(dict(zip(row_headers,result)))
+    cursor.close()
+    return jsonify(json_data)
+
+
+
+#Get all roles
+@app.route('/api/get/controlpanel/roles', methods = ['GET'])
+def api_get_controlpanel_roles():
+    cursor = mysql.connection.cursor()
+    #Fetch the user id for the given name and password
+    cursor.execute(f'SELECT name, idroles AS id FROM roles ORDER BY id')
+    row_headers=[x[0] for x in cursor.description] #this will extract row headers
+    myresult = cursor.fetchall()
+        
+    json_data=[]
+    for result in myresult:
+        json_data.append(dict(zip(row_headers,result)))
+    cursor.close()
+    return jsonify(json_data)
+
+
+
+#Get all users
+@app.route('/api/get/controlpanel/users', methods = ['GET'])
+def api_get_controlpanel_users():
+    cursor = mysql.connection.cursor()
+    #Fetch the user id for the given name and password
+    cursor.execute(f'SELECT username, idusers AS id FROM users ORDER BY id')
+    row_headers=[x[0] for x in cursor.description] #this will extract row headers
+    myresult = cursor.fetchall()
+        
+    json_data=[]
+    for result in myresult:
+        json_data.append(dict(zip(row_headers,result)))
+    cursor.close()
+    return jsonify(json_data)
+
+    #endregion
+
+
+    #region CreateNew
+
+#Create new building
+@app.route('/api/controlpanel/create/building', methods = ['POST'])
+def api_controlpanel_create_building():
+    mysql_json = request.get_json()
+    name = mysql_json.get('name')
+    address = mysql_json.get('address')           
+    cursor = mysql.connection.cursor()
+    #Fetch the user id for the given name and password
+    print(f"Given name: {name}, and address: {address}")
+    cursor.execute(f'CALL add_new_building("{name}", "{address}")')
+    myresult = cursor.fetchone()
+    cursor.close()
+    mysql.connection.commit()
+    if myresult != None:
+        if myresult[0] != "Building already exists":
+            print(f"BuildingID: {myresult[0]}")
+            return {"result": "success"}
+        else:
+            print(myresult[0])
+            return {"result": "failure", "reason": "Building already exists"}
+    else:
+        print("Something went wrong!")
+        return {"result": "failure", "reason": "unknown"}
+
+
+
+
+#Create new zone
+@app.route('/api/controlpanel/create/zone', methods = ['POST'])
+def api_controlpanel_create_zone():
+    mysql_json = request.get_json()
+    building = mysql_json.get('building')
+    zone = mysql_json.get('zone')           
+    cursor = mysql.connection.cursor()
+    #Fetch the user id for the given name and password
+    print(f"Given ZoneName: {zone}, and building: {building}")
+    cursor.execute(f'CALL add_new_zone("{zone}", "{building}")')
+    myresult = cursor.fetchone()
+    cursor.close()
+    mysql.connection.commit()
+    if myresult != None:
+        if myresult[0] == "Zone already exists":
+            print("Zone already exists")
+            return {"result": "failure", "reason": "Zone already exists"}
+
+        elif myresult[0] == "Building does not exist":
+            print("Building does not exist")
+            return {"result": "failure", "reason": "Building does not exist"}
+        else:
+            print(f"ZoneID: {myresult[0]}")
+            return {"result": "success"}
+    else:
+        print("Something went wrong!")
+        return {"result": "failure", "reason": "unknown"}
+
+
+
+
+#Create new Device
+@app.route('/api/controlpanel/create/device', methods = ['POST'])
+def api_controlpanel_create_device():
+    mysql_json = request.get_json()
+    building = mysql_json.get('building')
+    zone = mysql_json.get('zone')
+    device = mysql_json.get('device')  
+    location = mysql_json.get('location')          
+    cursor = mysql.connection.cursor()
+    #Fetch the user id for the given name and password
+    print(f"Data given: Building: {building}, Zone: {zone}, Device{device} and location: {location}")
+    cursor.execute(f'CALL add_new_device("{building}", "{zone}", "{device}", "{location}")')
+    myresult = cursor.fetchone()
+    cursor.close()
+    mysql.connection.commit()
+    if myresult != None:
+        if myresult[0] == "Zone does not exist":
+            print("Zone already exists")
+            return {"result": "failure", "reason": "Zone already exists"}
+
+        elif myresult[0] == "Building does not exist":
+            print("Building does not exist")
+            return {"result": "failure", "reason": "Building does not exist"}
+
+        elif myresult[0] == "Device already exists":
+            print("Device already exists")
+            return {"result": "failure", "reason": "Device already exists"}
+
+        else:
+            print(f"DeviceID: {myresult[0]}")
+            return {"result": "success"}
+    else:
+        print("Something went wrong!")
+        return {"result": "failure", "reason": "unknown"}
+
+
+
+
+
+#Create new role
+@app.route('/api/controlpanel/create/role', methods = ['POST'])
+def api_controlpanel_create_role():
+    mysql_json = request.get_json()
+    name = mysql_json.get('name')          
+    cursor = mysql.connection.cursor()
+    #Fetch the user id for the given name and password
+    print(f"Given Role name: {name}")
+    cursor.execute(f'CALL add_new_role("{name}")')
+    myresult = cursor.fetchone()
+    cursor.close()
+    mysql.connection.commit()
+    if myresult != None:
+        if myresult[0] != "Role already exists":
+            print(f"RoleID: {myresult[0]}")
+            return {"result": "success"}
+        else:
+            print(myresult[0])
+            return {"result": "failure", "reason": "Role already exists"}
+    else:
+        print("Something went wrong!")
+        return {"result": "failure", "reason": "unknown"}
+
+
+
+
+#Create new user
+@app.route('/api/controlpanel/create/user', methods = ['POST'])
+def api_controlpanel_create_user():
+    mysql_json = request.get_json()
+    name = mysql_json.get('name')
+    password = mysql_json.get('password')
+    cursor = mysql.connection.cursor()
+    #Fetch the user id for the given name and password
+    print(f"Given Username: {name}")
+    cursor.execute(f'CALL add_new_user("{name}", "{password}")')
+    myresult = cursor.fetchone()
+    cursor.close()
+    mysql.connection.commit()
+    if myresult != None:
+        if myresult[0] != "User already exists":
+            print(f"UserID: {myresult[0]}")
+            return {"result": "success"}
+        else:
+            print(myresult[0])
+            return {"result": "failure", "reason": "User already exists"}
+    else:
+        print("Something went wrong!")
+        return {"result": "failure", "reason": "unknown"}
+
+
+
+
+
+
+    #endregion
+
+
+#endregion
 
 #region Authentication
 @app.route('/api/auth/login', methods = ['POST'])

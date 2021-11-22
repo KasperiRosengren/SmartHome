@@ -9,7 +9,7 @@ function DataTest(){
 
 
   useEffect(() => {
-    fetch('/api/get/frontend/test/init')
+    fetch('/api/get/frontend/init')
     .then(response => response.json())
     .then(data => {
       console.log(data)

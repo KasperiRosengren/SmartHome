@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import Temperature from './Temperature';
 import Humidity from './Humidity';
-import Airpressure from './Airpressure';
+//import Airpressure from './Airpressure';
 
 
 const Weather = props =>{
@@ -15,11 +15,10 @@ const Weather = props =>{
             <div key={index} className="thermgauge">
                 <Temperature data={weat.temperature} zone={zoneName} building={buildingName}/>
                 <Humidity data={weat.humidity} />
-                <Airpressure data={weat.airpressure} />
             </div>
         )
     })
-            
+            //<Airpressure data={weat.airpressure} />
         
     
    return(

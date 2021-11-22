@@ -28,7 +28,7 @@ const Outlet = props =>{
                                 }
                             })
                         }}>
-                    {outlet.name}
+                    <p className="outletButtonName">{outlet.name}</p>
                 </button>
             </div>
         );
@@ -54,7 +54,7 @@ const Outlet = props =>{
                                 }
                             })
                         }}>
-                    {outlet.name}
+                    <p className="outletButtonName">{outlet.name}</p>
                 </button>
             </div>
         );

@@ -30,9 +30,15 @@
   margin: 0.5em;
 }
 
+
+
 .NavBar{
   background-color: #18191C;
   text-align: right;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 100;
 }
 
 .TopNavList{
@@ -44,8 +50,9 @@
 .TopNavItem{
   display: inline;
   text-decoration: none;
-  font-size: 2em;
+  font-size: 5vh;
 }
+
 
 a:-webkit-any-link {
   color: white;
@@ -107,10 +114,11 @@ a:-webkit-any-link {
 
 .LayoutTestMain{
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
   gap: 1rem;
 
   align-items: flex-start;
+  justify-content: center;
 }
 
 
@@ -134,22 +142,62 @@ a:-webkit-any-link {
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
   background-color: #36393fff;
   border-radius: 20%;
-
+  font-size: 6vh;
   width: 100%;
+  margin-bottom: 2vh;
 }
 
-.outlets{
+.outletBoxes{
   display: flex;
-
+  flex-direction: column;
+  
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
   background-color: #36393fff;
   border-radius: 5%;
-
+  
   width: 100%;
 }
 
+
+.outletBoxInner{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 1vh;
+  
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  background-color: #202225ff;
+  border-radius: 5%;
+
+  padding: 1vh;
+}
+
+
+.outletBoxTitle{
+  text-align: center;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  background-color: #36393fff;
+  border-radius: 10%;
+  font-size: 4vh;
+  width: 100%;
+}
+
+
+.outlets{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 1vh;
+  padding: 1vh;
+}
+
+
 .outlet{
-  margin: 0.25em;
+  margin: 0.2em;
+}
+
+.outletButtonName{
+  font-size: 3vh;
 }
 
 .graph{
@@ -163,6 +211,52 @@ a:-webkit-any-link {
   font-size: 90%;
   text-align: center;
   margin: 0;
+}
+
+
+
+.lights{
+  padding: 4vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  background-color: #36393fff;
+  border-radius: 5%;
+}
+
+.light{
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  background-color: #2f3136ff;
+  border-radius: 5%;
+
+  width: 100%;
+
+  padding: 1vh;
+  font-size: 4vh;
+}
+
+.lightOuter{
+  padding: 3vh;
+}
+
+.lightOuter:empty { 
+  display: none;
+}
+
+.lightInner{
+  display: grid;
+  grid-gap: 2vh;
+}
+
+.lightInnerLeft{
+  grid-column: 1;
+}
+
+.lightInnerRight{
+  grid-column: 2;
 }
 
 .leds{
@@ -242,13 +336,99 @@ a:-webkit-any-link {
   justify-content: space-around;
 }
 
-.thermgaugeinside{
+.thermgaugeInner{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 30px;
 }
 
-.thermgaugetext{
-  font-size: 2rem;
+
+
+.thermgaugeText{
+  font-size: 4vh;
+}
+
+
+
+
+
+
+
+
+
+.ControlPanelTableHeader{
+  text-align: center;
+
+  width: 100%;
+  margin-bottom: 1%;
+}
+
+.ControlPanelOuterDiv{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+  gap: 1rem;
+  justify-content: center;
+  align-items: stretch;
+  margin: 2%;
+}
+
+
+.ControlPanelOuterDivOOOOORIGINAAAAL{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+  gap: 1rem;
+
+  align-items: flex-start;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.ControlPanelInnerDiv{
+  background-color: #202225ff;
+  padding-bottom: 1%;
+  padding-left: 1%;
+  padding-right: 1%;
+
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+
+
+.ControlPanelTable, td, th, table{
+  border: 1px solid #36393F;
+}
+
+.ControlPanelTable, td{
+  text-align: center;
+}
+
+.ControlPanelTable, table{
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  width: 100%;
+  background-color: #202225ff;
+  border-collapse: collapse;
+}
+
+
+.CreateForm{
+  text-align: center;
+}
+
+.CreateForm, p{
+  font-size: 3rem;
+  margin: 0%;
+  
+}
+
+.CreateFormForm{
+  display: flex;
+  justify-content: center;
+  font-size: 3rem;
+  margin-bottom: 2%;
+  border: none;
 }
