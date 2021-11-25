@@ -8,12 +8,12 @@ const char* password = "PASSWORD";
 
 // Add your MQTT Broker IP address, example:
 const char* mqtt_server = "192.168.0.106";
-const int mqtt_port = 2883; //Default is 1883
+const int mqtt_port = 2883;
 
 
-String building = "home";
-String zone = "livingroom";
-String deviceName = "outlets";
+String building = "Garage";
+String zone = "Inside";
+String deviceName = "Outlets";
 
 WiFiClient clientname;
 PubSubClient client(clientname);
@@ -22,16 +22,8 @@ char msg[50];
 int value = 0;
 
 //Pins for outlets in BOX 0
-const int Box0_Out0 = 4;
-const int Box0_Out1 = 13;
-const int Box0_Out2 = 16;
-const int Box0_Out3 = 17;
-
-//Pins for outlets in BOX 1
-const int Box1_Out0 = 18;
-const int Box1_Out1 = 19;
-const int Box1_Out2 = 21;
-const int Box1_Out3 = 22;
+const int Garage_Box0_Out0 = 4;
+const int Garage_Box0_Out1 = 13;
 
 void setup() {
   Serial.begin(115200);
@@ -43,28 +35,12 @@ void setup() {
 
 void setup_pins(){
   //Set pins for box 0
-  pinMode(Box0_Out0, OUTPUT);
-  pinMode(Box0_Out1, OUTPUT);
-  pinMode(Box0_Out2, OUTPUT);
-  pinMode(Box0_Out3, OUTPUT);
-
-  //Set pins for box 1
-  pinMode(Box1_Out0, OUTPUT);
-  pinMode(Box1_Out1, OUTPUT);
-  pinMode(Box1_Out2, OUTPUT);
-  pinMode(Box1_Out3, OUTPUT);
+  pinMode(Garage_Box0_Out0, OUTPUT);
+  pinMode(Garage_Box0_Out1, OUTPUT);
 
   //Set pins to low for box 0
-  digitalWrite(Box0_Out0, LOW);
-  digitalWrite(Box0_Out1, LOW);
-  digitalWrite(Box0_Out2, LOW);
-  digitalWrite(Box0_Out3, LOW);
-
-  //Set pins to low for box 1
-  digitalWrite(Box1_Out0, LOW);
-  digitalWrite(Box1_Out1, LOW);
-  digitalWrite(Box1_Out2, LOW);
-  digitalWrite(Box1_Out3, LOW);  
+  digitalWrite(Garage_Box0_Out0, LOW);
+  digitalWrite(Garage_Box0_Out1, LOW);
 }
 
 
