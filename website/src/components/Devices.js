@@ -1,45 +1,40 @@
 import React, { useState, useEffect } from "react";
+import Zone from "./Data/Zone";
 //import RealZone from './Visualization/RealZone';
-import TestZoneModular from './Devices/TestZoneModular'
-import io from 'socket.io-client'
-/*
+
+
+
 function Devices(){
-  const [zones, setZones] = useState([])
+  const [buildings, setBuildings] = useState([])
+
+
   useEffect(() => {
-    fetch('/api/test/test')
+    fetch('/api/get/frontend/init')
     .then(response => response.json())
-    .then(data => setZones(data))
+    .then(data => {
+      if(data.result !== "failure"){
+        console.log(data)
+        setBuildings(data)
+      }
+      else{
+        console.log(data)
+      }
+    });
   }, []);
 
-  let listzone = Object.keys(zones).map((zone, index)=>{
-    console.log(zones[index])
-    return <TestZoneModular dataTo={zones[index]} key={index} />
+
+  //useEffect(() => console.log(buildings), [buildings]);
+
+
+
+  const zonelist = Object.keys(buildings).map((building, index) =>{
+    return <Zone dataTo={buildings[building]} key={index}/>
   })
 
-    return (
-        <div className="LayoutTestMain">
-            {listzone}
-        </div>
-      );
-}
-*/
-function Devices(){
-  const [zones, setZones] = useState([])
-  useEffect(() => {
-    fetch('/api/test/test')
-    .then(response => response.json())
-    .then(data => setZones(data))
-  }, []);
-
-  let listzone = Object.keys(zones).map((zone, index)=>{
-    console.log(zones[index])
-    return <TestZoneModular dataTo={zones[index]} key={index} />
-  })
-
-    return (
-        <div className="LayoutTestMain">
-            {listzone}
-        </div>
-      );
+  return (
+    <div className="LayoutTestMain">
+      {zonelist}
+    </div>
+  );
 }
 export default Devices

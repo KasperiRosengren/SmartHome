@@ -32,13 +32,13 @@ function CreateDeviceForm(){
 
   return (
       <div className="CreateForm">
-          <p>Create new device</p>
+          <h3>Create new device</h3>
         <div className="CreateFormForm">
-            <input type="text" placeholder="BuildingName" name="building" value={device.building} onChange={inputChanged} />
-            <input type="text" placeholder="ZoneName" name="zone" value={device.zone} onChange={inputChanged} />
-            <input type="text" placeholder="DeviceName" name="device" value={device.device} onChange={inputChanged} />
-            <input type="text" placeholder="Location" name="location" value={device.location} onChange={inputChanged}/>
-            <button onClick={CreateDevice}>Create</button>
+            <input className="CreateFormInput" type="text" placeholder="BuildingName" name="building" value={device.building} onChange={inputChanged} />
+            <input className="CreateFormInput" type="text" placeholder="ZoneName" name="zone" value={device.zone} onChange={inputChanged} />
+            <input className="CreateFormInput" type="text" placeholder="DeviceName" name="device" value={device.device} onChange={inputChanged} />
+            <input className="CreateFormInput" type="text" placeholder="Location" name="location" value={device.location} onChange={inputChanged}/>
+            <button style={{fontSize: "2vh"}} onClick={CreateDevice}>Create</button>
           </div>
       </div>
         

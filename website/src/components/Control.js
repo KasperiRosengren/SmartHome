@@ -6,19 +6,6 @@ import Roles from "./Control/Roles/Roles";
 import Users from "./Control/Users/Users";
 
 function Control(){
-
-/*
-  return (
-        <div className="ControlPanelTables">
-            <Buildings />
-            <Zones />
-            <Devices />
-            <Roles />
-            <Users />
-        </div>
-    );
-*/
-
     return (
         <div className="ControlPanelOuterDiv">
           <div className="ControlPanelInnerDiv"><Buildings /></div>

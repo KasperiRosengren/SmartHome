@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Home from './components/Home';
-import DataTest from './components/DataTest';
+import Devices from './components/Devices';
 import Control from './components/Control';
 import Temperatures from './components/Data/Visuals/Weather/Charts/Temperatures';
 import ControlBuildings from './components/Control/Buildings/ControlBuildings';
@@ -19,7 +19,7 @@ function App() {
             <li className="TopNavItem"> <Link to="/"> Home </Link>{' '}</li>
             
 
-            <li className="TopNavItem"> <Link to="/datatest"> Devices </Link>{' '}</li>
+            <li className="TopNavItem"> <Link to="/devices"> Devices </Link>{' '}</li>
             <li className="TopNavItem"> <Link to="/control"> Control </Link>{' '}</li>
           </ul>
         </div>
@@ -28,7 +28,7 @@ function App() {
             <Route exact path="/" component={Home} />
             
 
-            <Route path="/datatest" component={DataTest} />
+            <Route path="/devices" component={Devices} />
             <Route path="/control" component={Control} />
             <Route path="/:buildingName/:zoneName/weather/temperature/all" component={Temperatures} />
             <Route path="/buildings" component={ControlBuildings} />
