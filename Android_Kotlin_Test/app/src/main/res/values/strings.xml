@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">SaMi Kotlinilla</string>
+
+    <!--  Main activity stringit -->
+    <string name="btnGoToLogin">Move To Login</string>
+    <string name="messageGoToLogin">Siirryt login sivulle</string>
+    <string name="messageLogin">Kirjaudutaan järjestelmään</string>
+    <string name="btnGoToDevices">Siirry laitteisiin</string>
+    <string name="messageGoToDevices">Näytä laitteet joihin sinulla on oikeudet</string>
+    <string name="btnGoToEverything">Alueet ja rakennukset</string>
+    <string name="messageGoToEverything">Selaa alueita ja rakennuksia</string>
+
+    <!--   tabbed näytä kaikki aktiviteetti  -->
+    <string name="title_activity_show_everything">ShowEverythingActivity</string>
+    <string name="tab_text_1">Buildings</string>
+    <string name="tab_text_2">Zones</string>
+    <string name="tab_text_3">Devices</string>
+    <string name="tab_text_4">Anturidata</string>
+
+    <!--   login aktiviteetin stringit -->
+    <string name="title_activity_login_activity">PoistaLoginActivity2</string>
+    <string name="prompt_email">Käyttäjänimi</string>
+    <string name="prompt_password">Salasana</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Tervetuloa!"</string>
+    <string name="string_oletus_login_server">"192.168.1.171"</string>
+    <string name="string_oletus_portti_react">"3000"</string>
+    <string name="string_oletus_portti_python">"5000"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >8 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="message_get_login">"haetaan kirjautumistiedot"</string>
+    <string name="btnLogin">Login</string>
+    <string name="btnResetLogin">Clear</string>
+
+    <!-- ShowDevicesActivity stringit -->
+    <string name="title_activity_show_devices">Näytä laitteet</string>
+    <string name="btnRefreshDevices">Päivitä laitteet</string>
+    <string name="btnGetDevices">Hae laitteet</string>
+    <string name="joku_stringi1">Devices</string>
+    <string name="joku_stringgi2">Anturidata</string>
+    <string name="status_get_devices">Haetaan laiteluetteloa</string>
+    <string name="status_show_devices">Päivitetään laiteluetteloa</string>
+
+    <!-- mqtt_connecy ja connect_test stringit -->
+    <string name="btnGoToMQTT">Move To MQTT</string>
+    <string name="messageGoToMQTT">Siirryt MQTT sivulle</string>
+    <string name="mqtt_subsripe_to_topic">Kirjaudutaan topikkiin</string>
+    <string name="string_oletus_MQTT_payload">Oletus lähetettävä payload</string>
+    <string name="string_oletus_MQTT_topikki">Oletustopikki</string>
+    <string name="string_oletus_MQTT_serverPort">2883</string>
+    <string name="string_oletus_MQTT_serverIP">192.168.1.171</string>
+    <string name="string_incoming_MQTT_payload">Tähän tulee brokerilta topikin payload</string>
+</resources>
